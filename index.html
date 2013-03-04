@@ -11,7 +11,7 @@
     
     <link rel="shortcut icon" href=http://inuitcss.com/icon.png>
     <link rel=apple-touch-icon-precomposed href=http://inuitcss.com/icon.png>
-    <meta name=apple-mobile-web-app-title content="inuit.css">
+    <meta name=apple-mobile-web-app-title content="Devfacto Front-end Guide">
 </head>
 <body>
 
@@ -58,7 +58,11 @@
       </div>
     </div>
   </header>
-  
+
+<!-- 
+  ######## BASIC GUIDELINES ########
+-->  
+
   <section class="content__section" id="_guidelines">
     <div class="gw">
       <div class="g six-tenths push--two-tenths">
@@ -96,7 +100,11 @@
       </div>
     </div>
   </section>
-  
+
+<!-- 
+  ######## MARKUP HTML5 ETC ########
+-->  
+
   <section class="content__section" id="_markup">
     <div class="gw">
       <div class="g six-tenths push--two-tenths">
@@ -199,7 +207,11 @@
       </div>
     </div>
   </section>
-  
+
+<!-- 
+  ######## CSS STYLE & TYPOGRAPHY ########
+-->  
+
   <section class="content__section" id="_css">
   <div class="gw">
       <div class="g six-tenths push--two-tenths">
@@ -463,7 +475,11 @@
       </div>
     </div>
   </section>
-  
+
+<!-- 
+  ######## JAVASCRIPT ########
+-->  
+
   <section class="content__section" id="_javascript">
     <div class="gw">
       <div class="g six-tenths push--two-tenths">
@@ -846,13 +862,139 @@ demo = {
       </div>
     </div>
   </section>
+
+<!-- 
+  ######## ACCESSIBILITY ########
+-->  
+
+  <section class="content__section" id="_accessibility">
+    <div class="gw">
+      <div class="g six-tenths push--two-tenths">
+      
+    <h1>Accessibility</h1>
+    
+    <p>This is a rather broad subject, one that is apart of everything that goes into a web site. <a href="http://www.w3.org/WAI/" target="_blank">Accessibility</a> has to do with everything from how content is written to the structure of HTML markup, appearance and styling, progressive enhancement and graceful degradation, plus how semantic and meaningful your code is when it is read by browsers.</p>	
+    <p>We bring people and brands together, like never before. It is important that we reach as many people possible to provide new and exciting 'like never before' experiences. Some areas to consider for better accessibility during the development of any project are:</p>
+
+  	<ul>
+  		<li>Markup and semantics</li>
+  		<li>Usability of the interface, via keyboard and with JS disabled</li>
+  		<li>Correct usage of tags, attributes and descriptions</li>
+  		<li>Text content for all non-text content</li>
+  		<li>Summary content for screen-readers</li>
+  	</ul>
   
+  	<p>These areas are all closely related so it can be easier to break them down based on project types. Here are some things that should be done to achieve an accessible web page:</p>
   
-  <!-- 
+  	<h3>Skip Navigation</h3>
   
-  PERFORMANCE
-  -->
+  	<p>If your site has navigation elements before the main content, provide a "Skip to main content" link for screen readers. This is a link that is usually hidden using CSS, but will be available to a screen reader to jump past the navigation and go straight to the content. Sometimes it can be helpful to include a skip link to the footer or sitemap.</p>
   
+  	<pre><code>
+  	.skipnav { text-align: left; }
+  	.skipnav a {
+  		position: absolute;
+  		left: -10000px; 
+  		width: 1px; 
+  		height: 1px; 
+  		overflow: hidden;
+  	}
+  	.skipnav a:focus, .skipnav a:active { 
+  		position: static; 
+  		left: 0; 
+  		width: auto; 
+  		height: auto; 
+  		overflow: visible; 
+  		text-decoration: underline;
+  	}
+  	</code></pre>
+  
+  	<pre><code>
+  		<div class="skipnav">
+  			<a href="#maincontent">Skip to main content</a>
+  			<a href="#sitemap">Skip to footer site map</a>
+  		</div>
+  	</code></pre>
+  
+  	<h3>Tab Index</h3>
+  
+  	<p>The tab index of a document starts with the first link in the document and works through them all in the source order until the end. This is often unusable and counter-intuitive to how elements appear on screen. So ensure that the tabbing order of links and active elements is logical, by using the <code>tabindex</code> attribute. Form elements should be tabbed through in the order a user expects to complete it, not necessarily in the order of the tags in the HTML.</p>
+  
+  	<h3>Acronyms/Abbreviations</h3>
+  
+  	<p>If your content uses abbreviations or acronyms, they must be expanded using <code>abbr</code> and <code>acronym</code> tags</p>
+  
+  	<h3>Images.</h3>
+  
+  	<p>All images must have an <code>alt</code> attribute. Alt attributes should be meaningful and describe the contents of the picture. If the image is purely decorative, alt attributes should be marked as empty using <code>alt=""</code>. Don't put something like <code>alt="This image is for decoration only"</code> as it will be read by the screen-reader and is really annoying.</p>
+  
+  	<p>Do not use images for spacing or other similar effects. This should be done using CSS.</p>
+  
+  	<h3>Flash and Image Replacement</h3>
+  
+  	<p>Always use backup HTML content for flash. All promo images should use CSS-based image replacement instead of alt tags.</p>
+  
+  	<figure class="preCode">Fallback non-flash version:</figure>
+  	<pre><code>
+<a href="/nike/morethanagame/" id="morethan">
+  <h4>Nike: More Than A Game</h4>
+  <h5>Experience the movement and view apparel</h5>
+</a>
+  	</code></pre>
+  
+  	<br />
+  	
+  	<pre><code>
+  		a#morethan { background:url(/promos/nikegame.jpg) no-repeat; width: 200px; height: 100px;
+  					 text-indent: -999px; overflow:hidden; display:block; }
+  	</code></pre>
+  
+  	<p>Having a fallback for flash and images will also improve SEO.</p>
+  
+  	<h3>Tables</h3>
+  
+  	<p>Tables should be used purely for tabular data. They should not be used for presentational or layout purposes. When using tables:</p>
+  
+  	<ul>
+  		<li>Use the <code>th</code> element for table headers. If the headers themselves are abbreviated, use the <code>abbr</code> attribute to expand them.</li>
+  		<li>For complex tables, use the <code>scope</code> attribute on table headers to indicate what they pertain to.</li>
+  	</ul>
+  
+  	<h3>Color</h3>
+  
+  	<p>Use of color should fulfill the following:</p>
+  
+  	<ul>
+  		<li>Text should be readable with high contrast. Either use a light background with dark text or vice-versa. Very light text on a light background is virtually impossible to read for most people, it can be even worse for those with color-blindness.</li>
+  		<li>Do not use red and green together to make distinctions between key functionality - a small percentage of people will not be able to perceive the distinction.</li>
+  	</ul>
+  
+  	<p>The <a href="http://www.w3.org/WAI/ER/existingtools.html" target="_blank">WAI site contains a list of color-blindness tools</a> that let you see sites as people with different types of colorblindness would.</p>
+  
+  	<h3>JavaScript</h3>
+  
+  	<p>Pages should still be functional with JavaScript disabled. Applications should degrade gracefully, or when possible make use of <a href="https://github.com/Modernizr/Modernizr/wiki/HTML5-Cross-Browser-Polyfills">cross-browser polyfills</a> to add functionality to older browsers to enable features that may not be supported.</p>
+  
+  	<h3>Section 508</h3>
+  
+  	<p>Interfaces developed by Devfacto should meet Section 508 standards.</p>
+  
+  	<ul>
+  		<li><a href="http://www.section508.gov/index.cfm?FuseAction=Content&ID=12#Web">Section 508 Standards for intranet and internet information and applications</a>.</li>
+  	</ul>
+  
+  	<h3>Accessibility Checklist</h3>
+  
+  	<p>Here is the <a href="http://www.w3.org/TR/WCAG10/full-checklist.html">W3C checklist</a> of checkpoints for accessibility. Interfaces developed by Devfacto should meet Priority 1 guidelines - <a href="http://www.w3.org/TR/1999/WAI-WEBCONTENT-19990505/#Guidelines">The WCAG 1.0 Guidelines</a>.</p>
+
+      </div>
+    </div>
+  </section>
+
+<!-- 
+  ######## PERFORMANCE ENHANCEMENT (not that you need it) ########
+-->  
+
   <section class="content__section" id="_performance">
     <div class="gw">
       <div class="g six-tenths push--two-tenths">
@@ -1201,7 +1343,137 @@ demo = {
       </div>
     </div>
   </section>
+
+<!-- 
+  ######## BROWSER TESTING & SUPPORT ########
+-->  
+
+  <section class="content__section" id="_testing">
+    <div class="gw">
+      <div class="g six-tenths push--two-tenths">
+      
+    <h1>Browser Testing &amp; Support</h1>
+    
+    <p>Today's audience can choose from quite a large pool of web browsers, each providing a slightly (or dramatically) different experience. As developers, it is our responsibility to choose just how the web pages we build are displayed to those users. This section describes how we, at Devfacto, make some of these key decisions.</p>
+    
+    <h3>What we support</h3>
+
+  	<figure>
+  		<img src="img/browsers1.jpg" alt="Browsers" />
+  	</figure>
   
+  	<p><strong>Devfacto supports any browser with an A-Grade in <a href="http://developer.yahoo.com/yui/articles/gbs/">Yahoo's Graded Browser Support</a>, with the exception of Opera. There may be exceptions to this, given regional markets and their particular metrics</strong>.</p>
+  
+  	<p>We will strive to support any other mission critical browsers mandated by the client (IE 5.5, Opera, Konqueror, Safari 3 on PC, etc), though we cannot guarantee all functionality is possible.</p>
+  
+  
+  	<h3>How we test</h3>
+  
+  	<p>Comprehensive browser testing is a must on every Devfacto web project. Considerable effort must be made to test across browsers and platforms to ensure a quality and consistent user experience. Setting up a testing environment can be a challenge but can be well worth it.</p>
+  
+  	<h4>On Microsoft Windows</h4>
+  
+  	<h5 id="vhds">IE Testing</h5>
+  
+  	<p>Since it's impossible to have more than a single copy of Microsoft Internet Explorer installed on a PC, testing for IE is a challenge. Fortunately, Microsoft has finally made available development versions of older Internet Explorer's available for downloading. These Virtual Hard Drives (VHD's) run stripped down versions of Microsoft Windows that expire (time out) over time. Setting them up again after a few months is typically required. Development copies of Microsoft Windows from your MSDN license (if available) may also be an option depending on what you have access to.</p>
+  
+  	<ul>
+  		<li><a href="http://www.microsoft.com/windows/virtual-pc/default.aspx">Virtual PC</a> - Virtual PC must be installed on your computer, and if you are on Windows 7, you must use "XP Mode".</li>
+  		<li><a href="http://www.microsoft.com/downloads/en/details.aspx?FamilyID=21eabb90-958f-4b64-b5f1-73d0a413c8ef&displaylang=en">Microsoft Windows VPC Images</a> - Several varieties are available of the virtual hard drive images. You may need to install several to have a comprehensive test suite, depending on your project.</li>
+  	</ul>
+  
+  	<p>Additionally, other less effective IE Testing options (not typically recommended) include <a href="http://www.my-debugbar.com/wiki/IETester/HomePage">IETester</a>, which is still better than <a href="http://tredosoft.com/Multiple_IE">Multiple_IE</a> and <a href="http://tredosoft.com/IE7_standalone">IE7 standalone</a>.</p>
+  
+  	<h5>Firefox</h5>
+  
+  	<ul>
+  		<li><a href="http://www.mozilla.com/en-US/firefox/all-older.html">Firefox 3.6+</a> should be installed natively as well - with version 3.0 available through a <a href="http://portableapps.com/">portable apps</a> version. </li>
+  		<li>If you're up to it, <a href="https://wiki.molecular.com/wiki/Install_Firefox_3">Install Firefox 3, 3.5, and/or 3.6 side-by-side with FF4</a>. The Firefox Profile Manager allows you to install to different directories and <a href="http://lifehacker.com/5481213/master-multiple-firefox-profiles-for-more-productive-browsing">maintain different profiles for each</a>.</li>
+  	</ul>
+  
+  	<h5>Safari for the PC</h5>
+  
+  	<ul>
+  		<li>Use <a href="http://www.apple.com/safari/">the newest release of Safari for the PC</a>. It is 98% consistent with Safari on OS X, but not completely, so test there if its a required platform.</li>
+  	</ul>
+  
+  	<h5>Opera</h5>
+  
+  	<ul>
+  		<li>You can download <a href="http://arc.opera.com/pub/opera/win/">old versions from their archive</a>. Install in different folders to run multiple versions</li>
+  	</ul>
+  
+  	<h5>Google Chrome and Chrome Versions</h5>
+  
+  	<p>Google Chrome updates itself and as luck would have it, most all users have the most recent version more often than not. If only every browser were this easy. No worries about old browsers based on Google Chrome.</p>
+  
+  	<h4>On Mac OS X</h4>
+  
+  	<p>For the core Mac OS X browsers, Mozilla Firefox, Google Chrome and Apple Safari offer virtually identical browser experiences to their Windows counterparts. That said, some OS level differences can be present and web sites should be tested on both platforms. Typical differences are around font rendering and thus spacing issues sometimes arise.</p>
+  
+  	<h5>Testing for Windows on a Mac</h5>
+  
+  	<p>There are a number of options for testing Windows-based browsers on the Mac OS. First, Mac computers offer a "<a href="http://en.wikipedia.org/wiki/Boot_Camp_(software)">boot camp</a>" partition which allow you to boot the Mac into a Microsoft Windows partition. This is a complex yet thorough testing environment. Once you've booted to Windows, the normal <a href="#vhds">Windows options exist</a>.</p>
+  
+  	<p>Other options include virtualization of Windows inside Mac OS X, which allows you to literally run Windows inside of the Mac OS.</p>
+  
+  	<p><a href="#vhds">The Microsoft VHD's</a> can be opened or converted on most of these options, therefore enabling the same degree of testing prowess that Windows users have available to them. Though since you can also test on the Mac simultaneously, some might argue you have more flexibility...</p>
+  
+  	<ul>
+  		<li><a href="http://www.parallels.com/products/desktop/">Parallels</a> - Parallels is available and may already be installed by the Devfacto IT department on your Mac.</li>
+  		<li><a href="http://www.vmware.com/products/fusion/overview.html">VMWare Fusion</a> - VMWare Fusion offers the same level of Windows virtualization through their Fusion product.</li>
+  	</ul>
+  
+  	<h5>Mozilla Firefox</h5>
+  
+  	<p>Just like on Windows, you can install and run multiple copies of Mozilla Firefox on a Mac, though it is a bit trickier to set up multiple profiles via the Profile Manager. That said, there are some tricks you can use with <a href="http://sonnygill.net/mac/mac-multiple-firefox-profiles/">Automator to make separate profiles and run them nicely</a>.</p>
+  
+  	<h3>Bugs in standalone IE versions</h3>
+  
+  	<p>Note: The IE6 standalone has a buggy implementation of opacity in some cases. This will result in any opacity applied with a CSS filter, like alpha opacity or a 24-bit PNG, to fail. In the case that opacity must be tested, you will need a native IE6 installation.</p>
+  
+  	<p>It has been noticed that IE 7 using the Vista platform does have differences from IE 7 on Windows XP, therefore, you might want to make sure that someone on your team has this configuration as well. <a href="http://www.my-debugbar.com/wiki/IETester/HomePage">IETester</a> is known to fix a number of these issues, as do the Xenocode browsers.</p>
+
+    <h2>Browser Resolution</h2>
+    
+    <p>Along with catering to browsers, developers must stay conscious of the screen resolutions of their audience. As monitor screens get larger, the breadth of resolutions grows as well. Below are some guidelines to help you in working with resolutions.</p>
+
+  	<p><strong>1024px resolution</strong></p>
+  
+  	<ul>
+  		<li>Fold estimated at 570px.</li>
+  		<li>Optimal width: 960px - Has comfortable padding on both sides, is divisible by many numbers, and also plays well with <a href="http://www.iab.net/iab_products_and_industry_services/1421/1443/1452">IAB ad standard widths</a></li>
+  		<li>Larger width: 970px - Still has some padding on both sides in most browsers. The math plays well with the <a href="http://en.wikipedia.org/wiki/Golden_ratio">Golden Ratio</a></li>
+  		<li>Maximum width: 996px - Without incurring any horizontal scrollbars in the major browsers. <a href="http://www.nealgrosskopf.com/tech/thread.php?pid=43">Based on the research here</a> the maximum is 1003 px wide if you don't want a horizontal scrollbar.</li>
+  	</ul>
+  
+  
+  	<p><strong>Current stats on window sizes</strong></p>
+  
+  	<ul>
+  		<li><a href="http://www.cameronmoll.com/archives/001220.html">Authentic Boredom - Optimal width for 1024px resolution?</a></li>
+  		<li><a href="http://marketshare.hitslink.com/report.aspx?qprid=17&qpmr=100&qpdt=1&qpct=3&qptimeframe=M">Market share for browsers, operating systems and search engines</a></li><li><a href="http://www.w3counter.com/globalstats.php">Global Web Stats</a></li>
+  	</ul>
+  
+  
+  	<p><strong>System resolution is not, however, the same as browser size</strong></p>
+  
+  	<ul>
+  		<li><a href="http://mentalized.net/journal/2006/10/24/browser_size_does_matter_actual_numbers/">Browser size does matter - Actual numbers | mentalized</a></li>
+  		<li><a href="http://www.baekdal.com/reports/actual-browser-sizes/abs-sizes/">What size do i need to support | baekdal</a></li>
+  		<li><a href="http://www.456bereastreet.com/archive/200704/poll_results_504_of_respondents_maximise_windows/">Poll results: 50.4% of respondents maximise windows</a></li>
+  		<li><a href="http://www.useit.com/alertbox/screen_resolution.html">Screen Resolution and Page Layout</a></li>
+  	</ul>
+
+    
+      </div>
+    </div>
+  </section>
+
+<!-- 
+  ######## SEO (WHITE-HATS-ONLY CLUB) ########
+-->  
+
   <section class="content__section" id="_seo">
     <div class="gw">
       <div class="g six-tenths push--two-tenths">
@@ -1279,7 +1551,11 @@ demo = {
       </div>
     </div>
   </section>
-  
+
+<!-- 
+  ######## CODE REVIEWS ########
+-->  
+
   <section class="content__section" id="_review">
     <div class="gw">
       <div class="g six-tenths push--two-tenths">
@@ -1339,7 +1615,11 @@ demo = {
       </div>
     </div>
   </section>
-  
+
+<!-- 
+  ######## APPENDICES ########
+-->  
+
   <section class="content__section" id="_appendices">
     <div class="gw">
       <div class="g six-tenths push--two-tenths">
@@ -1612,7 +1892,11 @@ demo = {
       </div>
     </div>
   </section>
-  
+
+<!-- 
+  ######## COLOPHON ########
+-->  
+
   <section class="content__section" id="_colophon">
     <div class="gw">
       <div class="g six-tenths push--two-tenths">
@@ -1624,7 +1908,6 @@ demo = {
       </div>
     </div>
   </section>
-  
   <footer class="site__footer">
     <div class="gw">
       <div class="g six-tenths push--two-tenths">

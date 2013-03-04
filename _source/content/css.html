@@ -1,0 +1,267 @@
+<!-- 
+  ######## CSS STYLE & TYPOGRAPHY ########
+-->  
+
+  <section class="content__section" id="_css">
+  <div class="gw">
+      <div class="g six-tenths push--two-tenths">
+      
+    <h1>Stylesheets</h1>
+    
+		<p>The second component of a web page is the presentation information contained in the Cascading Style Sheet (<abbr title="Cascading Style Sheets">CSS</abbr>.) Web browsers successful implementation of CSS has given a whole generation of web authors site-wide control over the look and feel of their web sites.</p>
+  
+		<p>Just as the information on a web page is semantically described in the <a href="#markup">HTML Markup</a>, CSS describes all presentation aspects of the page via a description of its visual properties. CSS is powerful in that these properties are mixed and matched via identifiers to control the page's layout and visual characteristics through the layering of style rules (the "cascade").</p>
+  
+  	<h3>General Coding Principles</h3>
+  
+  	<ul>
+  		<li>Add CSS through external files, minimizing the # of files, if possible. It should always be in the HEAD of the document.</li>
+  		<li>Use the LINK tag to include, <a href="http://blog.amodernfable.com/2008/01/21/thoughts-on-linking-to-stylesheets/">never the @import.</a>
+  
+  			<figure class="preCode">Including a stylesheet</figure>
+  			<pre><code>
+&lt;link rel="stylesheet" type="text/css" href="myStylesheet.css" />
+  			</code></pre>
+  
+  			<figure class="preCode">Don't use inline styling</figure>
+  			<pre><code>
+&lt;p style="font-size: 12px; color: #FFFFFF">This is poor form, I say&lt;/p>
+  			</code></pre>
+  
+  			</li>
+  
+  		<li>Don't include styles inline in the document, either in a style tag or on the elements. It's harder to track down style rules.</li>	
+  		<li>Use <a href="http://necolas.github.com/normalize.css/">normalize.css</a> to make rendering more consistent across browsers.</li>
+  		<li>Use a font-normalization file like <a href="http://developer.yahoo.com/yui/fonts/">YUI fonts.css</a></li>	
+  		<li>Elements that occur only once inside a document should use IDs, otherwise, use classes.</li>
+  		<li>Understand <a href="http://www.stuffandnonsense.co.uk/archives/css_specificity_wars.html">cascading and selector specificity</a> so you can write very terse and effective code.</li>
+  		<li>Write selectors that are optimized for speed. Where possible, avoid expensive CSS selectors. For example, avoid the * wildcard selector and don't qualify ID selectors (e.g. <code>div#myid</code>) or class selectors (e.g. <code>table.results</code>.)  This is especially important with web applications where speed is paramount and there can be thousands or even tens of thousands of DOM elements. More on <a href="https://developer.mozilla.org/en/Writing_Efficient_CSS">writing efficient CSS on the MDC</a>.</li>
+  	</ul>
+  
+  	<h3>CSS Box Model</h3>
+  
+  	<p>Intimate knowledge and understanding of the CSS and browser-based box model is necessary for conquering the fundamentals of CSS layouts.</p>
+  
+  	<!--
+<figure class="extra">
+  		<img src="img/box_model.png" alt="CSS Box Model" title="CSS Box Model" />
+  		<figcaption><small>3D CSS Box Model</small> diagram by <a href="http://hicksdesign.co.uk/boxmodel/">Jon Hicks</a>.</small></figcaption>
+  	</figure>
+-->
+  
+  	<h3>CSS Validation</h3>
+  
+  	<p>We typically don't use the <a href="http://jigsaw.w3.org/css-validator/">W3C validator</a>.</p>
+
+  
+  	<h3>CSS Formatting</h3>
+  
+  	<p>At minimum, format CSS with selectors on one line and each property on its own line. The declarations are indented. </p>
+  	<p>As an enhancement to that style, related or child styles and additional 2 or 4 spaces. That allows for hierarchical scanning and organization and makes (for some people) an easier-to-read style sheet.</p>
+  	<p>Also, if you specify multiple selectors, it's a good idea to start each on new line. This prevents lines from growing long and improves readability as well as version control workflow.</p>
+      <pre><code>
+.post-list li a{
+  color:#A8A8A8;
+}
+.post-list li a:hover{
+  color:#000;
+  text-decoration:none;
+}
+.post-list li .author a, 
+.post-list li .author a:hover{
+  color:#F30;
+  text-transform:uppercase;
+}
+      </code></pre>
+      
+    <p>For multiple author environments, single line CSS should be avoided because it can cause issues with version control. </p>
+  	
+  	<h4>Alphabetize</h4>
+    
+    <p>If you're performance obsessed <a href="http://www.barryvan.com.au/2009/08/css-minifier-and-alphabetiser/">alphabetizing CSS properties increases the odds of larger repeatable patterns being present to aid in GZIP compression</a>. </p> 
+    
+    <h3>Classes vs. IDs</h3>
+  
+  	<p>You should only give elements an ID attribute if they are unique. They should be applied to that element only and nothing else. Classes can be applied to multiple elements that share the same style properties. Things that should look and work in the same way can have the same class name.</p>
+  
+  	<pre><code>
+&lt;ul id="categories">
+	&lt;li class="item">Category 1&lt;/li>
+	&lt;li class="item">Category 2&lt;/li>
+	&lt;li class="item">Category 3&lt;/li>
+&lt;/ul>
+  	</code></pre>
+  
+  	<h3>Naming Conventions for Selectors</h3>
+  
+  	<p>It is always preferable to name something, be it an ID or a class, by the nature of <strong>what it is</strong> rather than by <strong>what it looks like</strong>. For instance, a class name of <code>bigBlueText</code> for a special note on a page is quite meaningless if it has been changed to have a small red text color. Using a more intelligent convention such as <code>noteText</code> is better because when the  visual style changes it still makes sense.</p>
+  
+  
+  	<h3>Selectors</h3>
+  
+  	<p>The <a href="http://www.w3.org/TR/2009/PR-css3-selectors-20091215/">CSS Selectors Level 3</a> specification introduces a whole new set of <a href="http://www.w3.org/TR/css3-selectors/#selectors">CSS Selectors</a> that are extremely useful for better selection of elements.</p>
+  
+  
+  	<h4>Pseudo-classes</h4>
+  
+  	<p><a href="http://www.w3.org/TR/css3-selectors/#pseudo-classes">Pseudo-classes</a> enable you to dynamically style content. Some pseudo-classes have existed since CSS1 (<code>:visited, :hover</code>, etc.) and CSS2 (<code>:first-child, :lang</code>). As of CSS3, 16 new pseudo-classes have been added to the list and are especially useful for styling dynamic content. <a href="http://www.smashingmagazine.com/2011/03/30/how-to-use-css3-pseudo-classes/">Learn how to use pseudo-classes in-depth</a>.</p>
+  
+  
+  	<h4>Combinators &amp; Attribute Selectors</h4>
+  
+  	<p><a href="http://www.w3.org/TR/css3-selectors/#combinators">Combinators</a> provide shortcuts for selecting elements that are a descendant element, a child element, or an element's sibling.</p>
+  
+  	<p><a href="http://www.w3.org/TR/css3-selectors/#attribute-selectors">Attribute Selectors</a> are great for finding elements that have a specific attribute and/or specific value. Knowledge of regular expressions helps with attribute selectors. </p>
+  
+  
+  
+  <h4>Specificity</h4>
+  
+  	<p>Browsers <a href="http://www.w3.org/TR/2009/PR-css3-selectors-20091215/">calculate a selector's specificity</a> to determine which CSS rule should apply. If two selectors apply to the same element, the one with the <strong>higher specificity wins</strong>.</p>
+  
+  	<p>IDs have a higher specificity than attribute selectors do, and class selectors have higher specificity than any number of element selectors. Always try to use IDs to increase the specificity. There are times when we may try to apply a CSS rule to an element and it does not work no matter what we try. This is likely because the specificity of the selector used is lower than another one and the properties of the higher one are taking precedence over those you want to apply. This is more common in working with larger more complex stylesheets. It isn't a big issue with smaller projects usually.</p>
+  
+  	<h5>Calculating specificity</h5>
+  
+  	<p>When working with a large and complex stylesheet it helps to know how to calculate the value of a selector's specificity, to save you time and to make your selectors more efficient.</p>
+  
+  	<p>Specificity is calculated by counting various components of your CSS and expressing them in a form (a,b,c,d).</p>
+  
+  	<ul>
+  		<li>Element, Pseudo Element: d = 1 – (0,0,0,1)</li>
+  		<li>Class, Pseudo class, Attribute: c = 1 – (0,0,1,0)</li>
+  		<li>Id: b = 1 – (0,1,0,0)</li>
+  		<li>Inline Style: a = 1 – (1,0,0,0)</li>
+  	</ul>
+  
+  	<p>However, it may be better to use a specificity calculator.</p>
+  
+  	<ul>
+  		<li><a href="">Specificity Calculator</a></li>
+  		<li><a href="http://www.smashingmagazine.com/2007/07/27/css-specificity-things-you-should-know/">Some things you should know about specificity</a></li>
+  		<li><a href="http://www.brunildo.org/test/IEASpec.html#a">IE Specificity bugs</a></li>
+  	</ul>
+  
+  	<p>Using <code>!important</code> overrides all specificity no matter how high it is. We like to avoid using it for this reason. Most of the time it is not necessary. Even if you need to override a selector in a stylesheet you don't have access to, there are usually ways to override it without using !important. Avoid using it if possible.</p>
+  
+  
+  	<h3>Pixels vs. Ems</h3>
+  
+  	<p>We use the <code>px</code> unit of measurement to define <code>font size</code>, because it offers absolute control over text. We realize that using the <code>em</code> unit for font sizing used to be popular, to accommodate for Internet Explorer 6 not resizing pixel based text. However, all major browsers (including <abbr title="Internet Explorer 7">IE7</abbr> and <abbr title="Internet Explorer 8">IE8</abbr>) now support text resizing of pixel units and/or full-page zooming. Since <abbr title="Internet Explorer 6">IE6</abbr> is largely considered deprecated, pixels sizing is preferred. Additionally, unit-less <code>line-height</code> is preferred because it does not inherit a percentage value of its parent element, but instead is based on a multiplier of the <code>font-size</code>.</p>
+  
+  
+  	<figure class="preCode">Correct</figure>
+  	<pre><code>
+#selector {
+	font-size: 13px;
+	line-height: 1.5;  /*  13 * 1.5 = 19.5 ~ Rounds to 20px. */
+}
+  	</code></pre>
+  
+  	<figure class="preCode">Incorrect</figure>
+  	<pre><code>
+/*  Equivalent to 13px font-size and 20px line-height, but only if the browser default text size is 16px. */
+#selector {
+	font-size: 0.813em;
+	line-height: 1.25em;
+}
+  	</code></pre>
+  
+  
+  	<h3>Internet Explorer Bugs</h3>
+  
+  	<p>Inevitably, when all other browsers appear to be working correctly, any and all versions of Internet Explorer will introduce a few nonsensical bugs, delaying time to deployment. While we encourage troubleshooting and building code that will work in all browsers without special modifications, sometimes it is necessary to use conditional <code>if IE</code> comments for CSS hooks we can use in our stylesheets. <a href="http://paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/">Read more on paulirish.com</a></p>
+  
+  
+  	<figure class="preCode">Fixing IE</figure>
+  	<pre><code>
+&lt;!--[if lt IE 7 ]> &lt;body class="ie6"> &lt;![endif]-->
+&lt;!--[if IE 7 ]>    &lt;body class="ie7"> &lt;![endif]-->
+&lt;!--[if IE 8 ]>    &lt;body class="ie8"> &lt;![endif]-->
+&lt;!--[if IE 9 ]>    &lt;body class="ie9"> &lt;![endif]-->
+&lt;!--[if !IE]><!--> &lt;body> <!--<![endif]-->
+  	</code></pre>
+  
+  	<pre><code>
+.box { float: left; margin-left: 20px; }
+.ie6 .box { margin-left: 10px; }
+  	</code></pre>
+  
+  	<p>If you're using HTML5 (and the <a href="#h5bp">HTML5 Boilerplate</a>) we encourage the use of the <a href="http://www.modernizr.com/">Modernizer</a> JavaScript library and this pattern:</p>
+
+  	<pre><code>
+&lt;!--[if lt IE 7]> &lt;html class="no-js ie ie6" lang="en"> &lt;![endif]-->
+&lt;!--[if IE 7]>    &lt;html class="no-js ie ie7" lang="en"> &lt;![endif]-->
+&lt;!--[if IE 8]>    &lt;html class="no-js ie8" lang="en"> &lt;![endif]-->
+&lt;!--[if IE 9]>    &lt;html class="no-js ie9" lang="en"> &lt;![endif]-->
+&lt;!--[if gt IE 9]><!-->&lt;html class="no-js" lang="en">&lt;!--<![endif]-->
+  	</code></pre>
+  
+    <h3>Shorthand</h3>
+  
+  	<p>In general, CSS shorthand is preferred because of its terseness, and the ability to later go back and add in values that are already present, such as the case with margin and padding. Developers should be aware of the <abbr title="Top Right Bottom Left">TRBL</abbr> acronym, denoting the order in which the sides of an element are defined, in a clock-wise manner: Top, Right, Bottom, Left. If <em>bottom</em> is undefined, it inherits its value from <em>top</em>. Likewise, if <em>left</em> is undefined, it inherits its value from <em>right</em>. If only the <em>top</em> value is defined, all sides inherit from that one declaration.</p>
+  
+  	<p class="normalize">For more on reducing stylesheet code redundancy, and using CSS shorthand in general:</p>
+  
+  	<ul>
+  		<li><a href="http://qrayg.com/journal/news/css-background-shorthand">http://qrayg.com/journal/news/css-background-shorthand</a></li>
+  		<li><a href="http://sonspring.com/journal/css-redundancy">http://sonspring.com/journal/css-redundancy</a></li>
+  		<li><a href="http://dustindiaz.com/css-shorthand">http://dustindiaz.com/css-shorthand</a></li>
+  	</ul>
+  
+  	<h3>Images</h3>
+  
+  	<ul>
+  		<li>For repeating images, use <a href="http://www.iandevlin.com/blog/2010/03/webdev/fading-issue-with-repeating-background-transparent-image-in-internet-explorer">something larger than 1x1 pixels</a></li>
+  		<li>You should never be using spacer images.</li>
+  		<li>Use <a href="#_leverage_css_sprites">CSS sprites generously</a>. They make hover states easy, improve page load time, and reduce carbon dioxide emissions.</li>
+  
+  		<li>Typically, all images should be sliced with a transparent background (PNG8). All should be cropped tightly to the image boundaries.
+  			<ul>
+  				<li>However, the logo should always have a background matte and have padding before the crop. (so other people can hotlink to the file)</li>
+  			</ul>
+  		</li>
+  	</ul>
+  	
+    <h3>Color Management</h3>
+
+    <ul>
+      <li>Verify that all members on your team have consistent color management settings.</li>
+        <ul>
+          <li>Any given two monitors most likely display the colors differently, but sRGB color profile must be your default.</li>
+          <li>When you open files in Photoshop, pay attention to Color Profile warnings and notify team members when Photoshop is suggesting to convert an image to a different profile.</li> 
+  			</ul>
+      <li>Never embed a color profile in your images.
+        <ul>
+  				<li>When you Save for Web and Devices from Photoshop, be sure to uncheck &quot;Embed Color Profile.&quot;</li>
+  			</ul>
+			</li>
+    </ul>
+   	
+	
+    <h2>Web Typography</h2>
+    
+  	<h3>General Text and Font Styling</h3>
+  
+  	<h4>Headings</h4>
+  
+  	<ul>
+  		<li>Define default styling for <code>h1-h6</code> headings including headings as links. It's helpful to declare these at the top of your CSS document, and modify them with as necessary for consistency across the site.</li>
+  		<li>Headings should show a hierarchy indicating different levels of importance from the top down starting with h1 having the largest font size.</li>
+  		<li>SEO: To get a rough idea of how your page hierarchy is organized and read, use your Developer Toolbar to disable CSS. You'll end up with a text-based view of all your <code>h1-h6</code> tags, <code>strong</code>, <code>em</code>, etc.</li>
+  	</ul>
+  
+  	<h4>Links</h4>
+  
+  	<ul>
+  		<li>Default styles for links should be declared and different from the main text styling, and with differing styles for hover state.</li>
+  		<li>When styling links with underlines use <code>border-bottom</code> and some padding with <code>text-decoration: none;</code>. This just looks better.</li>
+  	</ul>
+
+    <h2>Preprocessors</h2>
+    
+    <p>A word on CSS preprocessors.</p>
+    
+      </div>
+    </div>
+  </section>
