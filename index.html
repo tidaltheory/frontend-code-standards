@@ -8,6 +8,8 @@
     
     <link rel=stylesheet href=css/style.css>
     <link rel="stylesheet" id="open-sans-css" href="http://www.devfacto.com/wp-content/themes/wp-devfacto/stylesheets/fonts/stylesheet.css" media="all">
+    <link rel="stylesheet" href="css/shCore.css">
+    <link rel="stylesheet" href="css/shThemeDefault.css">
     
     <link rel="shortcut icon" href=http://inuitcss.com/icon.png>
     <link rel=apple-touch-icon-precomposed href=http://inuitcss.com/icon.png>
@@ -132,23 +134,23 @@
   	<p>A nice aspect of HTML5 is that it streamlines the amount of code that is required. Meaningless attributes have been dropped, and the <code>DOCTYPE</code> declaration has been simplified significantly. Additionally, there is no need to use <code>CDATA</code> to escape inline JavaScript, formerly a requirement to meet XML strictness in XHTML.</p>
   	
   	<figure class="preCode">HTML5 Doctype</figure>
-  	<pre><code>
-&lt;!DOCTYPE html&gt;
-  	</code></pre>
+  	<textarea class="brush: html;">
+    	<!DOCTYPE html>
+  	</textarea>
   	
   	<h3>Character Encoding</h3>
   
   	<p>All markup should be delivered as UTF-8, as its the most friendly for internationalization. It should be designated in both the HTTP header and the head of the document.</p>
   	
-  	<p>Setting the character set using &lt;meta&gt; tags.</p>
-  	<pre><code>
-&lt;meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /&gt;
-  	</code></pre>
+  	<p>Setting the character set using <meta> tags.</p>
+  	<textarea class="brush: html;">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  	</textarea>
   	
   	<p>In HTML5, just do:</p>
-  	<pre><code>
-&lt;meta charset="utf-8"&gt;
-  	</code></pre>
+  	<textarea class="brush: html;">
+<meta charset="utf-8">
+  	</textarea>
   	
   	
   	<h2>General Markup Guidelines</h2>
@@ -170,22 +172,22 @@
   		<li>Make use of THEAD, TBODY, and TH tags (and Scope attribute) when appropriate.
   
   			<figure class="preCode">Table markup with proper syntax (THEAD,TBODY,TH [scope])</figure>
-  			<pre><code>
-&lt;table summary="This is a chart of year-end returns for 2005.">
-	&lt;thead>
-		&lt;tr>
-			&lt;th scope="col">Table header 1&lt;/th>
-			&lt;th scope="col">Table header 2&lt;/th>
-		&lt;/tr>
-	&lt;/thead>
-	&lt;tbody>
-		&lt;tr>
-			&lt;td>Table data 1&lt;/td>
-			&lt;td>Table data 2&lt;/td>
-		&lt;/tr>
-	&lt;/tbody>
-&lt;/table>
-  			</code></pre>
+  			<textarea class="brush: html;">
+<table summary="This is a chart of year-end returns for 2005.">
+	<thead>
+		<tr>
+			<th scope="col">Table header 1</th>
+			<th scope="col">Table header 2</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>Table data 1</td>
+			<td>Table data 2</td>
+		</tr>
+	</tbody>
+</table>
+  			</textarea>
   		</li>
   	
   		<li>Always use title-case for headers and titles. Do not use all caps or all lowercase titles in markup, instead apply the CSS property <code>text-transform:uppercase/lowercase</code>.</li>
@@ -195,9 +197,9 @@
   	
   	<p>The HTML5 specification defines quotes around attributes as optional. For consistency with attributes that accept whitespace, all attributes should be quoted. </p> 
   	
-  	<pre><code>
-&lt;p class="line note" data-attribute="106">This is my paragraph of special text.&lt;/p>
-  	</code></pre>
+  	<textarea class="brush: html;">
+<p class="line note" data-attribute="106">This is my paragraph of special text.</p>
+  	</textarea>
 	
 	
     <h2>BEM Methodology</h2>
@@ -1921,5 +1923,15 @@ demo = {
 
 </div>
 
+
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>window.jQuery||document.write("<script src='js/libs/jquery-1.9.1.min.js'>\x3C/script>");</script>
+  <script src="js/libs/shCore.js"></script>
+  <script src="js/libs/shBrushXml.js"></script>
+  <script src="js/libs/shBrushJScript.js"></script>
+  <script src="js/libs/shBrushCss.js"></script>
+  
+  <script src="js/plugins.min.js"></script>
+  
 </body>
 </html>
