@@ -15,7 +15,7 @@
     <link rel=apple-touch-icon-precomposed href=http://inuitcss.com/icon.png>
     <meta name=apple-mobile-web-app-title content="Devfacto Front-end Guide">
 </head>
-<body>
+<body data-spy="scroll" data-target=".navbar" data-offset="0">
 
 <nav class="navbar">
 
@@ -28,8 +28,8 @@
   
     <div class="g nine-tenths">  
   
-      <ul class="nav nav--block">
-        <li><a class="nav__item" href="#_guidelines">Guidelines</a></li>
+      <ul class="nav nav--block navbar__main">
+        <li class="active"><a class="nav__item" href="#_guidelines">Guidelines</a></li>
         <li><a class="nav__item" href="#_markup">Markup</a></li>
         <li><a class="nav__item" href="#_css">Stylesheets</a></li>
         <li><a class="nav__item" href="#_javascript">JavaScript</a></li>
@@ -46,8 +46,6 @@
   </div> <!-- /.gw -->
   
 </nav>
-
-<div data-spy="scroll" data-target="#navbarSticky" data-offset="0" class="scrollspy-example">
 
   <header class="jumbotron">
     <div class="gw">
@@ -1921,11 +1919,11 @@ demo = {
   </footer>
   
 
-</div>
-
 
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
   <script>window.jQuery||document.write("<script src='js/libs/jquery-1.9.1.min.js'>\x3C/script>");</script>
+  
+  <script src="js/libs/bs-scrollspy.js"></script>
   <script src="js/libs/shCore.js"></script>
   <script src="js/libs/shBrushXml.js"></script>
   <script src="js/libs/shBrushJScript.js"></script>
