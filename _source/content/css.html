@@ -19,14 +19,14 @@
   		<li>Use the LINK tag to include, <a href="http://blog.amodernfable.com/2008/01/21/thoughts-on-linking-to-stylesheets/">never the @import.</a>
   
   			<figure class="preCode">Including a stylesheet</figure>
-  			<pre><code>
-&lt;link rel="stylesheet" type="text/css" href="myStylesheet.css" />
-  			</code></pre>
+  			<textarea class="brush:html">
+<link rel="stylesheet" type="text/css" href="myStylesheet.css" />
+  			</textarea>
   
   			<figure class="preCode">Don't use inline styling</figure>
-  			<pre><code>
-&lt;p style="font-size: 12px; color: #FFFFFF">This is poor form, I say&lt;/p>
-  			</code></pre>
+  			<textarea class="brush:html">
+<p style="font-size: 12px; color: #FFFFFF">This is poor form, I say</p>
+  			</textarea>
   
   			</li>
   
@@ -59,7 +59,7 @@
   	<p>At minimum, format CSS with selectors on one line and each property on its own line. The declarations are indented. </p>
   	<p>As an enhancement to that style, related or child styles and additional 2 or 4 spaces. That allows for hierarchical scanning and organization and makes (for some people) an easier-to-read style sheet.</p>
   	<p>Also, if you specify multiple selectors, it's a good idea to start each on new line. This prevents lines from growing long and improves readability as well as version control workflow.</p>
-      <pre><code>
+      <textarea class="brush:css">
 .post-list li a{
   color:#A8A8A8;
 }
@@ -72,7 +72,7 @@
   color:#F30;
   text-transform:uppercase;
 }
-      </code></pre>
+      </textarea>
       
     <p>For multiple author environments, single line CSS should be avoided because it can cause issues with version control. </p>
   	
@@ -84,13 +84,13 @@
   
   	<p>You should only give elements an ID attribute if they are unique. They should be applied to that element only and nothing else. Classes can be applied to multiple elements that share the same style properties. Things that should look and work in the same way can have the same class name.</p>
   
-  	<pre><code>
-&lt;ul id="categories">
-	&lt;li class="item">Category 1&lt;/li>
-	&lt;li class="item">Category 2&lt;/li>
-	&lt;li class="item">Category 3&lt;/li>
-&lt;/ul>
-  	</code></pre>
+  	<textarea class="brush:html">
+<ul id="categories">
+	<li class="item">Category 1</li>
+	<li class="item">Category 2</li>
+	<li class="item">Category 3</li>
+</ul>
+  	</textarea>
   
   	<h3>Naming Conventions for Selectors</h3>
   
@@ -151,21 +151,21 @@
   
   
   	<figure class="preCode">Correct</figure>
-  	<pre><code>
+  	<textarea class="brush:css">
 #selector {
 	font-size: 13px;
 	line-height: 1.5;  /*  13 * 1.5 = 19.5 ~ Rounds to 20px. */
 }
-  	</code></pre>
+  	</textarea>
   
   	<figure class="preCode">Incorrect</figure>
-  	<pre><code>
+  	<textarea class="brush:css">
 /*  Equivalent to 13px font-size and 20px line-height, but only if the browser default text size is 16px. */
 #selector {
 	font-size: 0.813em;
 	line-height: 1.25em;
 }
-  	</code></pre>
+  	</textarea>
   
   
   	<h3>Internet Explorer Bugs</h3>
@@ -174,28 +174,28 @@
   
   
   	<figure class="preCode">Fixing IE</figure>
-  	<pre><code>
-&lt;!--[if lt IE 7 ]> &lt;body class="ie6"> &lt;![endif]-->
-&lt;!--[if IE 7 ]>    &lt;body class="ie7"> &lt;![endif]-->
-&lt;!--[if IE 8 ]>    &lt;body class="ie8"> &lt;![endif]-->
-&lt;!--[if IE 9 ]>    &lt;body class="ie9"> &lt;![endif]-->
-&lt;!--[if !IE]><!--> &lt;body> <!--<![endif]-->
-  	</code></pre>
+  	<textarea class="brush:html">
+<!--[if lt IE 7 ]> <body class="ie6"> <![endif]-->
+<!--[if IE 7 ]>    <body class="ie7"> <![endif]-->
+<!--[if IE 8 ]>    <body class="ie8"> <![endif]-->
+<!--[if IE 9 ]>    <body class="ie9"> <![endif]-->
+<!--[if !IE]><!--> <body> <!--<![endif]-->
+  	</textarea>
   
-  	<pre><code>
+  	<textarea class="brush:css">
 .box { float: left; margin-left: 20px; }
 .ie6 .box { margin-left: 10px; }
-  	</code></pre>
+  	</textarea>
   
   	<p>If you're using HTML5 (and the <a href="#h5bp">HTML5 Boilerplate</a>) we encourage the use of the <a href="http://www.modernizr.com/">Modernizer</a> JavaScript library and this pattern:</p>
 
-  	<pre><code>
-&lt;!--[if lt IE 7]> &lt;html class="no-js ie ie6" lang="en"> &lt;![endif]-->
-&lt;!--[if IE 7]>    &lt;html class="no-js ie ie7" lang="en"> &lt;![endif]-->
-&lt;!--[if IE 8]>    &lt;html class="no-js ie8" lang="en"> &lt;![endif]-->
-&lt;!--[if IE 9]>    &lt;html class="no-js ie9" lang="en"> &lt;![endif]-->
-&lt;!--[if gt IE 9]><!-->&lt;html class="no-js" lang="en">&lt;!--<![endif]-->
-  	</code></pre>
+  	<textarea class="brush:html">
+<!--[if lt IE 7]> <html class="no-js ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js ie8" lang="en"> <![endif]-->
+<!--[if IE 9]>    <html class="no-js ie9" lang="en"> <![endif]-->
+<!--[if gt IE 9]><!--><html class="no-js" lang="en"><!--<![endif]-->
+  	</textarea>
   
     <h3>Shorthand</h3>
   
