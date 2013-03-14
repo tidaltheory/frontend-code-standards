@@ -25,7 +25,7 @@
   
   	<p>If your site has navigation elements before the main content, provide a "Skip to main content" link for screen readers. This is a link that is usually hidden using CSS, but will be available to a screen reader to jump past the navigation and go straight to the content. Sometimes it can be helpful to include a skip link to the footer or sitemap.</p>
   
-  	<pre><code>
+  	<textarea class="brush:css">
   	.skipnav { text-align: left; }
   	.skipnav a {
   		position: absolute;
@@ -42,14 +42,14 @@
   		overflow: visible; 
   		text-decoration: underline;
   	}
-  	</code></pre>
+  	</textarea>
   
-  	<pre><code>
+  	<textarea class="brush:html">
   		<div class="skipnav">
   			<a href="#maincontent">Skip to main content</a>
   			<a href="#sitemap">Skip to footer site map</a>
   		</div>
-  	</code></pre>
+  	</textarea>
   
   	<h3>Tab Index</h3>
   
@@ -70,19 +70,19 @@
   	<p>Always use backup HTML content for flash. All promo images should use CSS-based image replacement instead of alt tags.</p>
   
   	<figure class="preCode">Fallback non-flash version:</figure>
-  	<pre><code>
+  	<textarea class="brush:html">
 <a href="/nike/morethanagame/" id="morethan">
   <h4>Nike: More Than A Game</h4>
   <h5>Experience the movement and view apparel</h5>
 </a>
-  	</code></pre>
+  	</textarea>
   
   	<br />
   	
-  	<pre><code>
+  	<textarea class="brush:css">
   		a#morethan { background:url(/promos/nikegame.jpg) no-repeat; width: 200px; height: 100px;
   					 text-indent: -999px; overflow:hidden; display:block; }
-  	</code></pre>
+  	</textarea>
   
   	<p>Having a fallback for flash and images will also improve SEO.</p>
   
