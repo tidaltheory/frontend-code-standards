@@ -1,0 +1,195 @@
+/*------------------------------------*\
+    $MIXINS
+\*------------------------------------*/
+
+@mixin gradient-linear-d($startColor, $endColor, $angle) {
+  background-color: $endColor;
+  background-repeat: repeat-x;
+  background-image: -moz-linear-gradient($angle, $startColor, $endColor); // FF 3.6+
+  background-image: -webkit-linear-gradient($angle, $startColor, $endColor); // Safari 5.1+, Chrome 10+
+  background-image: -o-linear-gradient($angle, $startColor, $endColor); // Opera 11.10
+  background-image: linear-gradient($angle, $startColor, $endColor); // Standard, IE10
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#{ie-hex-str($startColor)}', endColorstr='#{ie-hex-str($endColor)}', GradientType=1); // IE9 and down fallback to horiziontal
+}
+
+
+/*------------------------------------*\
+    $LAYOUT-SPECIFIC
+\*------------------------------------*/
+
+// Let's choose a nice text-selection color
+::selection {
+  background: rgba(0,0,0,0.1);
+  }
+::-moz-selection {
+  background: rgba(0,0,0,0.1);
+  }
+img::selection {
+  background: transparent; 
+  }
+img::-moz-selection {
+  background: transparent;
+  }
+body {
+  -webkit-tap-highlight-color: rgba(0,0,0,0.1)
+  }
+  
+  
+// Let's set our font quasi-globally
+h1, h2, h3, h4, h5, h6, 
+p, ul, ol, dl, figure {
+  @extend .brand-face;
+}
+
+
+// Let's set some quasi-global link style 
+.content__section a, .content__section a:visited {
+  border-bottom: 1px solid $brand-color;
+  text-decoration: none;
+  
+  @extend .brand-color;
+}
+
+
+.navbar {
+  background: #403e41;
+  height: $base-spacing-unit * 2;
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 1030;
+  
+  @include vendor(box-shadow, 0 0 3px 3px rgba(0,0,0,.2));
+}
+
+.navbar .nav {
+  margin-bottom: 0;
+}
+
+.navbar .nav__item {
+  color: #fff;
+  height: $base-spacing-unit * 2;
+  line-height: 1.3;
+  opacity: 0.8; 
+}
+
+.navbar a:hover {
+  background: rgba(255,255,255,0.1);
+  text-decoration: none;
+  opacity: 1;
+}
+
+.navbar__main .active .nav__item {
+  background: #363636;
+  opacity: 1;
+  
+  @include vendor(box-shadow, inset 0 0 9px rgba(17,17,17,1));
+}
+
+.brand {
+  display: inline-block;
+  height: $base-spacing-unit * 2;
+  line-height: 1.3;
+  margin-left: $base-spacing-unit;
+  padding: 12px;
+}
+
+.jumbotron {
+  color: #fff;
+  margin-top: $base-spacing-unit * 2;
+  margin-bottom: $base-spacing-unit * 2;
+  padding: $base-spacing-unit * 4 0 $base-spacing-unit / 4 0;
+  position: relative;
+  text-shadow: 0 1px 3px rgba(0,0,0,.4), 0 0 30px rgba(0,0,0,.075);
+  
+  @include gradient-linear-d(#06703b, #8cc640, 45deg);
+    
+  -webkit-box-shadow: inset 0 3px 7px rgba(0,0,0,.2), inset 0 -3px 7px rgba(0,0,0,.2);
+     -moz-box-shadow: inset 0 3px 7px rgba(0,0,0,.2), inset 0 -3px 7px rgba(0,0,0,.2);
+          box-shadow: inset 0 3px 7px rgba(0,0,0,.2), inset 0 -3px 7px rgba(0,0,0,.2);
+}
+.jumbotron h1 {
+  font-family: 'OpenSansSemiBold', sans-serif;
+  font-size: 80px;
+  letter-spacing: -1px;
+  line-height: 1;
+  
+}
+.jumbotron p {
+  font-size: 24px;
+  font-weight: 300;
+  line-height: 1.25;
+}
+
+.jumbotron__links {
+  list-style: none;
+  margin: 0 0 $base-spacing-unit * 2 0;
+}
+.jumbotron__links li {
+  color: rgba(255,255,255,.25);
+  display: inline;
+  padding: 0 $base-spacing-unit 0 0;
+}
+
+.jumbotron a {
+  color: #fff;
+  color: rgba(255,255,255,.5);
+  -webkit-transition: all .2s ease-in-out;
+     -moz-transition: all .2s ease-in-out;
+          transition: all .2s ease-in-out;
+}
+.jumbotron a:hover {
+  border-bottom: 1px solid;
+  color: #fff;
+  text-decoration: none;
+  text-shadow: 0 0 10px rgba(255,255,255,.25);
+}
+
+.jumbotron p .version {
+  color: rgba(255,255,255,.5);
+  font-size: 0.75em;
+}
+
+
+.content__section {
+  margin: $base-spacing-unit * 3 0;
+}
+
+.content__section h1 {
+  text-indent: -0.7em;
+}
+.content__section h1:before {
+  content: "\a7  ";
+  font-size: 0.8em;
+  font-weight: 300;
+  opacity: 0.1;
+}
+
+/*
+.content__section .content__section--link {
+  opacity: 0;
+}
+.content__section h1:hover .content__section--link {
+  opacity: 0.25;
+}
+*/
+
+
+
+.site__footer {
+  background-color: #403e41;
+  color: #fff;
+  padding: $base-spacing-unit * 2 0 100px 0;
+}
+
+.site__footer .brand {
+  color: #fff !important;
+  text-transform: lowercase;
+  font-family: 'OpenSansBold', sans-serif !important;
+  font-size: 1.33em;
+  font-variant: small-caps;
+  font-weight: normal;
+  margin: 0;
+  padding: 0;
+}

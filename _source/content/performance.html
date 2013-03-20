@@ -1,0 +1,352 @@
+<!-- 
+  ######## PERFORMANCE ENHANCEMENT (not that you need it) ########
+-->  
+
+  <section class="content__section" id="_performance">
+    <div class="gw">
+      <div class="g six-tenths push--two-tenths">
+      
+    <h1>Performance</h1>
+    
+    <p>As we continue to push the limits of what the web can do, it remains just as important a web page can be used with minimal effort or wait time. The following section explains how web pages can be optimized to keep all audiences happy.</p>
+    
+    <h3>Optimize Delivery of CSS and JavaScript</h3>
+
+  	<p>There are many optimizations that should be done for serving CSS and javascript in Production:</p>
+  
+  	<ul>
+  		<li>Follow the <a href="http://developer.yahoo.com/performance/">Yahoo Performance Guidelines</a></li>
+  		<li>Smush images using <a href="http://developer.yahoo.com/yslow/smushit/">smush.it</a>. Also using <a href="http://developer.yahoo.com/yslow/">YSlow</a> can autosmush all your images for you.</li>
+  
+  		<li>Set caching headers appropriately.</li>
+  		<li>Consider a cookie-less subdomain for static assets</li>
+  		<li>Avoid inline &lt;script&gt; blocks.</li>
+  
+  		<li>CSS should be located in the <code>&lt;head></code> of the document, Javascript should be right before the <code>&lt;/body></code> tag.</li>
+  		<li>Both CSS and JavaScript should be served minified. Most people use the <a href="http://developer.yahoo.com/yui/compressor/">YUI Compressor</a> for this.</li>
+  
+  		<li>Both should be <a href="http://code.google.com/speed/page-speed/docs/payload.html#GzipCompression">served using gzip on the wire</a></li>
+  		<li>CSS should be concatenated together. Obviously this can only be done for files that share the same media type (e.g. screen or print). The general goal here is to reduce the number of HTTP connections to dependencies during the loading of the page.</li>
+  
+  		<li>JavaScript should be concatenated. While a ajax script dependency manager would be ideal (similar to the YUI 3 Loader), it's rather complicated to implement. In its place I'd recommend a singular download of most of the script used on the site. (Of course, proper caching should be used to retain the file as long as is reasonable).</li>
+  
+  		<li>Concatenation and minification typically occur during an automated build process, when packaging the code for deployment on stage or production. Many use tools like <a href="http://ant.apache.org/">Ant</a> or <a href="http://maven.apache.org/">Maven</a> for this.</li>
+  		<li>Avoid inline <code>&lt;script></code> blocks within the HTML. They block rendering and are quite devastating to page load time.</li>
+  	</ul>
+  
+  
+  	<h3>Optimize JavaScript execution</h3>
+  
+  	<p>During a page load, there is typically a lot of script waiting to execute, but you can prioritize it. This order prioritizes based on user response:</p>
+  
+  	<ol>
+  		<li>Script that changes the visible nature of the page needs to fire absolutely first. This includes any font adjustment, box layout, or IE6 pngfixes.</li>
+  		<li>Page content initialization</li>
+  		<li>Page header, topnav and footer initialization</li>
+  		<li>Attaching event handlers</li>
+  		<li>Omniture, Doubleclick, and other 3rd party scripts</li>
+  	</ol>
+  
+  
+  	<h3>Leverage CSS Sprites</h3>
+  
+  	<p>CSS Sprites basically take a number of image assets and merge them together into a singular image file. Each part of it is revealed using CSS background-position. Some typical CSS would look like:</p>
+  
+  	<textarea class="brush:css">
+  	a.expandbox { display:block; width: 75px; height: 15px; text-indent: -999px; overflow:hidden;
+  				 background: url(../img/sprite.png) no-repeat -50px -5px;  }
+  	</textarea>
+  
+  	<p>It's quite common to leverage sprites for :hover states. In that case you'll see something like:</p>
+  
+  	<textarea class="brush:css">
+  	a.expandbox:hover { background-position: -50px -20px; }
+  	</textarea>
+  
+  	<p>Using sprites reduces total page weight and reduces HTTP connections which speeds up page load. <a href="http://css-tricks.com/css-sprites/">More on the general technique and overview at css-tricks.com</a>.  It is just an overall best practice to make use of CSS sprite images whenever you can.</p>
+  
+  	<p>Many developers use a vertically-oriented sprite in addition to the primary sprite. This vertical sprite will be <strong>less than or equal to 100px wide</strong> (and tall) and contain icons that are typically placed next to text, such as list item bullets or call to action links and buttons. Yahoo uses a few <a href="http://l.yimg.com/a/i/ww/sp/pa-icons3.gif">such as this one</a>.</p>
+  
+  	<p>The one consideration is to not make sprites too large, something over 1000px in either direction will end up using a sizeable amount of memory. Read more on <a href="http://blog.vlad1.com/2009/06/22/to-sprite-or-not-to-sprite/">when to use sprites and memory usage here</a>, and for more general tips and techniques on creating sprites check out the <a href="http://blog.mozilla.com/webdev/2009/03/27/css-spriting-tips/">Mozilla Dev Blog</a>.</p>
+  
+  	<p>Some general <a href="http://blog.mozilla.com/webdev/2009/03/27/css-spriting-tips/">tips and techniques</a> in sprite creation can be found on the <a href="http://blog.mozilla.com/webdev/2009/03/27/css-spriting-tips/">Mozilla Dev Blog</a>.</p>
+  
+  	<h3>Image formats</h3>
+  
+  	<p>There are four main image formats that should be used, detailed here:</p>
+  
+  	<ol>
+  		<li><p><strong>JPEG.</strong> - This will cover all photography-based images, such as homepage and category page promo images, or anything with a very high color count.</p></li>
+  		<li>
+  			<p><strong>PNG24.</strong> This format, easily accessible in Photoshop, outputs high-color count imagery and fully supports graded opacity by pixel. Relatively, it's quite a heavy format as far as kilobyte weight. It is the only format that IE6 needs to execute a pngfix on. In that case, Devfacto recommends the <a href="http://www.dillerdesign.com/experiment/DD_belatedPNG/">DD_belatedPNG script</a> (A pngfix fixes the issue where PNG24's appear to have a gray or light-blue background in IE6. They are not always compatible with background-position).</p>
+  			<p>In many cases, you can use a GIF fallback for IE6, in place of a PNG24. This is especially true if any sprites need to be done in PNG24. All pngfixes are very slow and expensive, so it's best to avoid using them.</p>
+  		</li>
+  		<li><p><strong>PNG8.</strong> - A surprising diversity of color can be captured inside 256 colors, so it's worth trying PNG before heading JPG. PNG also is a lot more compressible than GIF (using tools like pngcrush and pngquant). This format allows graded opacity in nearly all browsers, but in IE6, those semi-opaque pixels are just shown 100% transparent. In many cases this is sufficient. It also does not require a pngfix script to be run, so it's optimized for speed.</p>
+  			<p>Photoshop cannot output these semi-opaque files correctly but Fireworks can. More detail here: <a href="http://www.sitepoint.com/png8-the-clear-winner/">http://www.sitepoint.com/png8-the-clear-winner/</a></p>
+  		</li>
+  		<li><p><strong>Transparent GIF 89a.</strong> - GIF 89a offers the flexibility of transparency and wide browser support, but the constraints of no graded opacity nor a color depth above 256. In our experience, color depths of 64 still provide very good quality thumbnails, and keep the file size comparably very small.</p>
+  			<p>All low-color count imagery such as icons or thematic graphics should be done in PNG8, as it's the most size-efficient of these four. PNG8 is our primary recommendation for most site graphics.</p>
+  		</li>
+  	</ol>
+  
+  	<p>Detailed information on the PNG format, browser support, and the pros and cons of each can be <a href="http://calendar.perfplanet.com/2010/png-that-works/">found in this excellent article</a>.</p>
+  
+  	<p>For further optimization all of these formats, taking them through <a href="http://developer.yahoo.com/yslow/smushit/">Yahoo's Smush.It</a> will reveal how they can be smaller.</p>
+  
+  
+  	<h3>Caching</h3>
+  
+  	<p>For static content, the browser should cache the file locally as long as is reasonable.
+  	Content that should have far future caching includes:</p>
+  
+  	<ul>
+  		<li>CSS and JavaScript</li>
+  		<li>product images</li>
+  		<li>thematic graphics</li>
+  		<li>favicon.ico</li>
+  		<li>flash .swf's</li>
+  		<li>promo images (lighter caching likely)</li>
+  	</ul>
+  
+  	<p>For the best caching, leverage the Expires http header. This is a far future Expires header, telling the browser that this response won't be stale until April 15, 2015.</p>
+  
+  	<pre>Expires: Thu, 15 Apr 2015 20:00:00 GMT</pre>
+  
+  	<p>If your server is Apache, use the ExpiresDefault directive to set an expiration date relative to the current date. This example of the ExpiresDefault directive sets the Expires date 1 year out from the time of the request.</p>
+  
+  	<pre>ExpiresDefault "access plus 1 year"</pre>
+  
+  	<p>Expires http header should be set to a value between one month from present to a year (far future) from present. Caching only applies to that exact URL, so a change in the filename of any asset will start a fresh copy. Many developers use a build process to add a version number or timestamp to their assets. Each subsequent build will start a brand new cached version, allowing you to use far future cache dates without worry. <a href="http://code.google.com/speed/page-speed/docs/caching.html#LeverageBrowserCaching ">Google has a lot more detail on browser caching</a>.</p>
+  
+  
+  	<h3>Shard resources across domains</h3>
+  
+  	<p>Static content should certainly be served from a domain different than the one that serves HTML. This is optimal so that there are <a href="http://developer.yahoo.com/performance/rules.html#cookie_free">no extra cookies headers on all static content requests</a>. It's also much easier to write caching rules for the entire domain. (Also any subdomains of the current domain will inherit domain cookies, so it's worth using a completely new domain).</p>
+  
+  	<p>However with enough assets (especially images) the number of requests grows enough to slow down the load of the page. Many browsers have a low constraint of how many assets they will download simultaneously per domain. (In IE6 and 7, it's only two). In this case, we can serve the assets from multiple subdomains such as:</p>
+  
+  	<ul>
+  		<li>static1.otherdomain.com</li>
+  		<li>static2.otherdomain.com</li>
+  		<li>static3.otherdomain.com</li>
+  	</ul>
+  
+  	<p><a href="http://code.google.com/speed/page-speed/docs/rtt.html#ParallelizeDownloads">More information on domain sharding on Google Speed</a></p>
+  
+  
+  	<h3>Avoid IFRAMEs</h3><!-- like the plague -->
+  
+  	<p>Iframes are the most costly element to add to a given page. They block the page from firing the onload event until they are complete. Sometimes they are useful to let another agency handle tracking scripts. For example the Doubleclick floodlight tag is an iframe, and the admin can add tracking pixels into it from their dashboard. In any case where an iframe is added, it should be appended to the DOM dynamically after window onload has fired. <a href="http://developer.yahoo.com/performance/rules.html#iframes">More detail at Yahoo's Performance site.</a></p>
+  
+  
+  	<h3>3rd Party Integration</h3>
+  
+  	<h4>Omniture</h4>
+  
+  	<p>We recommend to add the Omniture JavaScript code to the DOM using JavaScript after the page has loaded (either a DOM ready event or window's load event). Using this technique, there is no external domain script dependency, which can slow down (and potentially hang) a page load.</p>
+  
+  
+  	<h4>Flash</h4>
+  
+  	<p>Backup HTML content should be in place of the flash in all cases to maximize SEO value. For XML-driven flash, the backup HTML content should be leveraging the exact same XML file, to ensure data consistency.</p>
+  
+  	<p>All replacements should be done using SWFObject but without inline script tags. SWFObject initialization should fire after the DOM Ready event. Minimum player version should be set to minimum v9, to ensure AS3 compatibility.</p>
+
+    <h2>Cross-browser Performance Strategy</h2>
+    
+		<p>There are two major truths when it comes to in-browser experience:</p>
+  
+		<ol>
+			<li>Everyone wants the most responsive experience possible.</li>
+			<li>Everything added to the page slows it down.</li>
+		</ol>
+
+		<p>So with these two facts of life, what steps do we need to take so everyone is happy?</p>
+  
+  
+  	<h3>Create success metrics with the client</h3>
+  
+  	<p>These should be customized to your client and project and done before the wireframing phase. These goals should be reasonable from a technical POV, as well as testable.</p>
+  
+  	<strong>Some goals that would be appropriate:</strong>
+  
+  	<ol>
+  		<li>The slowest browser supported must go from an empty cache to fully loaded and initialized within 5 seconds.</li>
+  		<li>Hover states (and other 'instant' changes) should respond within 100ms.</li>
+  		<li>Animations should appear smooth, with jumpiness occurring &lt; 15% of the time (across all browsers).</li>
+  	</ol>
+  
+  	<p>For load-time based goals, it's important to define the benchmark system. Something like <a href="http://www.webpagetest.org/">PageTest</a> is a good option. Additionally, goals may be defined for multiple pages, for example: the two most popular landing pages (e.g. homepage and support).</p>
+  
+  	<p>If the client has more aggressive goals than are reasonable with the intended design, expectations need to be set across the board, priming the team that performance goals are going to be paramount.</p>
+  
+  
+  	<h3>Communicating the performance impact during design phase</h3>
+  
+  	<strong>Internally</strong>
+  
+  	<p>During IA, IxD, and visual design, it is the front end engineer's role to communicate the performance impact of interactive features or certain visual techniques on the target browsers. Give the designers constraints: "If we're using Cufon, we cannot have more than 10 elements of custom font per page."</p>
+  
+  	<strong>Externally</strong>
+  
+  	<p>Expectations need to be set that <strong>all browsers will not have the same experience</strong>. They won't perform as well as each other, nor may it make sense to have feature parity. It may be sensible to drop a few features from the IE7 experience. Features that could be considered to be dropped are: <em>shadows, transitions, rounded corners, opacity, gradients.</em></p>
+  
+  	<strong>When communicating the impact of something:</strong>
+  
+  	<ul>
+  		<li>Clarify the impact with as much detail as possible: "it will hurt page load" vs "it will add 2 seconds to page load in IE"</li>
+  		<li>Provide a quick POC (proof of concept) if it's reasonable: "This similar-looking page without siFR loads in 2 seconds, with siFR it loads in 8 and has a delay to show during scrolling"</li>
+  	</ul>
+  
+  
+  	<h3>Develop according to best practices</h3>
+  
+  	<p>Choose libraries and plugins that are performance optimized. Make wise architecture decisions based on performance goals. Also minimize DOM manipulation when possible, and write styles to <a href="http://paulirish.com/2009/avoiding-the-fouc-v3/">avoid visual changes</a> to the page as it loads and initializes.</p>
+  
+  
+  	<h3>Measure performance during QA</h3>
+  
+  	<p>QA teams should also prioritize performance related tickets alongside visual, functional, and usability issues. Developers and QA should determine how that priority will be assigned. During QA, the success metrics should be tested regularly.</p>
+  
+  	<strong>Tools to test with</strong>
+  
+  	<ul>
+  		<li><a href="http://developer.yahoo.com/yslow/">YSlow</a>, <a href="http://code.google.com/speed/page-speed/">Page Speed</a>, <a href="http://stevesouders.com/hammerhead/">Hammerhead</a>, <a href="http://msfast.myspace.com/">MSFast</a>, <a href="http://www.webpagetest.org/">PageTest</a></li>
+  	</ul>
+  
+  	<strong>When performance goals aren't met, there are three options:</strong>
+  
+  	<ol>
+  		<li><em>Redevelop the code</em> - profile, discover bottlenecks, refactor code, optimize to target faster execution in the browser</li>
+  		<li><em>Drop the feature</em> - turn it off for slower browsers only</li>
+  		<li><em>Redesign approach of the UI</em> - perhaps the design could use a tweak which would bypass the issue entirely</li>
+  	</ol>
+  
+  	<p>With this approach, we think all parties have a better chance of having aligned expectations heading in as well as a more sensible workflow in dealing with performance challenges.</p>
+
+    
+      </div>
+    </div>
+  </section>
+  
+  <section class="content__section" id="_testing">
+    <div class="gw">
+      <div class="g six-tenths push--two-tenths">
+      
+    <h1>Browser Testing &amp; Support</h1>
+    
+    <p>Today's audience can choose from quite a large pool of web browsers, each providing a slightly (or dramatically) different experience. As developers, it is our responsibility to choose just how the web pages we build are displayed to those users. This section describes how we, at Devfacto, make some of these key decisions.</p>
+    
+    <h3>What we support</h3>
+
+  	<figure>
+  		<img src="img/browsers1.jpg" alt="Browsers" />
+  	</figure>
+  
+  	<p><strong>Devfacto supports any browser with an A-Grade in <a href="http://developer.yahoo.com/yui/articles/gbs/">Yahoo's Graded Browser Support</a>, with the exception of Opera. There may be exceptions to this, given regional markets and their particular metrics</strong>.</p>
+  
+  	<p>We will strive to support any other mission critical browsers mandated by the client (IE 5.5, Opera, Konqueror, Safari 3 on PC, etc), though we cannot guarantee all functionality is possible.</p>
+  
+  
+  	<h3>How we test</h3>
+  
+  	<p>Comprehensive browser testing is a must on every Devfacto web project. Considerable effort must be made to test across browsers and platforms to ensure a quality and consistent user experience. Setting up a testing environment can be a challenge but can be well worth it.</p>
+  
+  	<h4>On Microsoft Windows</h4>
+  
+  	<h5 id="vhds">IE Testing</h5>
+  
+  	<p>Since it's impossible to have more than a single copy of Microsoft Internet Explorer installed on a PC, testing for IE is a challenge. Fortunately, Microsoft has finally made available development versions of older Internet Explorer's available for downloading. These Virtual Hard Drives (VHD's) run stripped down versions of Microsoft Windows that expire (time out) over time. Setting them up again after a few months is typically required. Development copies of Microsoft Windows from your MSDN license (if available) may also be an option depending on what you have access to.</p>
+  
+  	<ul>
+  		<li><a href="http://www.microsoft.com/windows/virtual-pc/default.aspx">Virtual PC</a> - Virtual PC must be installed on your computer, and if you are on Windows 7, you must use "XP Mode".</li>
+  		<li><a href="http://www.microsoft.com/downloads/en/details.aspx?FamilyID=21eabb90-958f-4b64-b5f1-73d0a413c8ef&displaylang=en">Microsoft Windows VPC Images</a> - Several varieties are available of the virtual hard drive images. You may need to install several to have a comprehensive test suite, depending on your project.</li>
+  	</ul>
+  
+  	<p>Additionally, other less effective IE Testing options (not typically recommended) include <a href="http://www.my-debugbar.com/wiki/IETester/HomePage">IETester</a>, which is still better than <a href="http://tredosoft.com/Multiple_IE">Multiple_IE</a> and <a href="http://tredosoft.com/IE7_standalone">IE7 standalone</a>.</p>
+  
+  	<h5>Firefox</h5>
+  
+  	<ul>
+  		<li><a href="http://www.mozilla.com/en-US/firefox/all-older.html">Firefox 3.6+</a> should be installed natively as well - with version 3.0 available through a <a href="http://portableapps.com/">portable apps</a> version. </li>
+  		<li>If you're up to it, <a href="https://wiki.molecular.com/wiki/Install_Firefox_3">Install Firefox 3, 3.5, and/or 3.6 side-by-side with FF4</a>. The Firefox Profile Manager allows you to install to different directories and <a href="http://lifehacker.com/5481213/master-multiple-firefox-profiles-for-more-productive-browsing">maintain different profiles for each</a>.</li>
+  	</ul>
+  
+  	<h5>Safari for the PC</h5>
+  
+  	<ul>
+  		<li>Use <a href="http://www.apple.com/safari/">the newest release of Safari for the PC</a>. It is 98% consistent with Safari on OS X, but not completely, so test there if its a required platform.</li>
+  	</ul>
+  
+  	<h5>Opera</h5>
+  
+  	<ul>
+  		<li>You can download <a href="http://arc.opera.com/pub/opera/win/">old versions from their archive</a>. Install in different folders to run multiple versions</li>
+  	</ul>
+  
+  	<h5>Google Chrome and Chrome Versions</h5>
+  
+  	<p>Google Chrome updates itself and as luck would have it, most all users have the most recent version more often than not. If only every browser were this easy. No worries about old browsers based on Google Chrome.</p>
+  
+  	<h4>On Mac OS X</h4>
+  
+  	<p>For the core Mac OS X browsers, Mozilla Firefox, Google Chrome and Apple Safari offer virtually identical browser experiences to their Windows counterparts. That said, some OS level differences can be present and web sites should be tested on both platforms. Typical differences are around font rendering and thus spacing issues sometimes arise.</p>
+  
+  	<h5>Testing for Windows on a Mac</h5>
+  
+  	<p>There are a number of options for testing Windows-based browsers on the Mac OS. First, Mac computers offer a "<a href="http://en.wikipedia.org/wiki/Boot_Camp_(software)">boot camp</a>" partition which allow you to boot the Mac into a Microsoft Windows partition. This is a complex yet thorough testing environment. Once you've booted to Windows, the normal <a href="#vhds">Windows options exist</a>.</p>
+  
+  	<p>Other options include virtualization of Windows inside Mac OS X, which allows you to literally run Windows inside of the Mac OS.</p>
+  
+  	<p><a href="#vhds">The Microsoft VHD's</a> can be opened or converted on most of these options, therefore enabling the same degree of testing prowess that Windows users have available to them. Though since you can also test on the Mac simultaneously, some might argue you have more flexibility...</p>
+  
+  	<ul>
+  		<li><a href="http://www.parallels.com/products/desktop/">Parallels</a> - Parallels is available and may already be installed by the Devfacto IT department on your Mac.</li>
+  		<li><a href="http://www.vmware.com/products/fusion/overview.html">VMWare Fusion</a> - VMWare Fusion offers the same level of Windows virtualization through their Fusion product.</li>
+  	</ul>
+  
+  	<h5>Mozilla Firefox</h5>
+  
+  	<p>Just like on Windows, you can install and run multiple copies of Mozilla Firefox on a Mac, though it is a bit trickier to set up multiple profiles via the Profile Manager. That said, there are some tricks you can use with <a href="http://sonnygill.net/mac/mac-multiple-firefox-profiles/">Automator to make separate profiles and run them nicely</a>.</p>
+  
+  	<h3>Bugs in standalone IE versions</h3>
+  
+  	<p>Note: The IE6 standalone has a buggy implementation of opacity in some cases. This will result in any opacity applied with a CSS filter, like alpha opacity or a 24-bit PNG, to fail. In the case that opacity must be tested, you will need a native IE6 installation.</p>
+  
+  	<p>It has been noticed that IE 7 using the Vista platform does have differences from IE 7 on Windows XP, therefore, you might want to make sure that someone on your team has this configuration as well. <a href="http://www.my-debugbar.com/wiki/IETester/HomePage">IETester</a> is known to fix a number of these issues, as do the Xenocode browsers.</p>
+
+    <h2>Browser Resolution</h2>
+    
+    <p>Along with catering to browsers, developers must stay conscious of the screen resolutions of their audience. As monitor screens get larger, the breadth of resolutions grows as well. Below are some guidelines to help you in working with resolutions.</p>
+
+  	<p><strong>1024px resolution</strong></p>
+  
+  	<ul>
+  		<li>Fold estimated at 570px.</li>
+  		<li>Optimal width: 960px - Has comfortable padding on both sides, is divisible by many numbers, and also plays well with <a href="http://www.iab.net/iab_products_and_industry_services/1421/1443/1452">IAB ad standard widths</a></li>
+  		<li>Larger width: 970px - Still has some padding on both sides in most browsers. The math plays well with the <a href="http://en.wikipedia.org/wiki/Golden_ratio">Golden Ratio</a></li>
+  		<li>Maximum width: 996px - Without incurring any horizontal scrollbars in the major browsers. <a href="http://www.nealgrosskopf.com/tech/thread.php?pid=43">Based on the research here</a> the maximum is 1003 px wide if you don't want a horizontal scrollbar.</li>
+  	</ul>
+  
+  
+  	<p><strong>Current stats on window sizes</strong></p>
+  
+  	<ul>
+  		<li><a href="http://www.cameronmoll.com/archives/001220.html">Authentic Boredom - Optimal width for 1024px resolution?</a></li>
+  		<li><a href="http://marketshare.hitslink.com/report.aspx?qprid=17&qpmr=100&qpdt=1&qpct=3&qptimeframe=M">Market share for browsers, operating systems and search engines</a></li><li><a href="http://www.w3counter.com/globalstats.php">Global Web Stats</a></li>
+  	</ul>
+  
+  
+  	<p><strong>System resolution is not, however, the same as browser size</strong></p>
+  
+  	<ul>
+  		<li><a href="http://mentalized.net/journal/2006/10/24/browser_size_does_matter_actual_numbers/">Browser size does matter - Actual numbers | mentalized</a></li>
+  		<li><a href="http://www.baekdal.com/reports/actual-browser-sizes/abs-sizes/">What size do i need to support | baekdal</a></li>
+  		<li><a href="http://www.456bereastreet.com/archive/200704/poll_results_504_of_respondents_maximise_windows/">Poll results: 50.4% of respondents maximise windows</a></li>
+  		<li><a href="http://www.useit.com/alertbox/screen_resolution.html">Screen Resolution and Page Layout</a></li>
+  	</ul>
+
+    
+      </div>
+    </div>
+  </section>
