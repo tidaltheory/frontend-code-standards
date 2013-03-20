@@ -3670,6 +3670,9 @@ body {
   border-bottom: 1px solid #007dc3;
   text-decoration: none; }
 
+body {
+  background-color: #fbfbfa; }
+
 .navbar {
   background: #403e41;
   height: 48px;
